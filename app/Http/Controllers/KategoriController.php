@@ -26,8 +26,8 @@ class KategoriController extends Controller
 
         try{
             $kategori->save();
-            return redirect(route('kategori.index'))->with('pesan', ['succes','Berhasil tambah kategori']);
-        }catch(\Exception){
+            return redirect(route('kategori.index'))->with('pesan', ['success','Berhasil tambah kategori']);
+        }catch(\Exception $e){
             return redirect(route('kategori.index'))->with('pesan', ['danger','Gagal tambah kategori']);
         }
 
@@ -48,8 +48,8 @@ class KategoriController extends Controller
 
         try{
             $kategori->save();
-            return redirect(route('kategori.index'))->with('pesan', ['succes','Berhasil ubah kategori']);
-        }catch(\Exception){
+            return redirect(route('kategori.index'))->with('pesan', ['success','Berhasil ubah kategori']);
+        }catch(\Exception $e){
             return redirect(route('kategori.index'))->with('pesan', ['danger','Gagal ubah kategori']);
         }
 
@@ -59,8 +59,8 @@ class KategoriController extends Controller
 
         try{
             $kategori->delete();
-            return redirect(route('kategori.index'))->with('pesan', ['succes','Berhasil hapus kategori']);
-        }catch(\Exception){
+            return redirect(route('kategori.index'))->with('pesan', ['success','Berhasil hapus kategori']);
+        }catch(\Exception $e){
             return redirect(route('kategori.index'))->with('pesan', ['danger','Gagal hapus kategori']);
         }
 
