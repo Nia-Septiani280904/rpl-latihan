@@ -9,10 +9,10 @@ class KategoriController extends Controller
 {
     public function index(){
         $kategori = Kategori::all();
-        return view('backend.kategori.list', compact('kategori'));
+        return view('backend.content.kategori.list', compact('kategori'));
     }
     public function tambah(){
-        return view('backend.kategori.formTambah');
+        return view('backend.content.kategori.formTambah');
 
     }
     public function prosesTambah(Request $request){
@@ -32,7 +32,7 @@ class KategoriController extends Controller
     }
     public function ubah($id){
         $kategori = Kategori::findOrFail($id);
-        return view('backend.kategori.formUbah', compact('kategori'));
+        return view('backend.content.kategori.formUbah', compact('kategori'));
 
     }
     public function prosesUbah(Request $request){
