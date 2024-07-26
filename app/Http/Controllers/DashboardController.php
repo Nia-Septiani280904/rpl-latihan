@@ -7,13 +7,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+use App\Models\Kategori;
+use App\Models\Berita;
+
 class DashboardController extends Controller
 {
     public function index(){
-        return view('backend.content.dashboard');
+        $totalBerita = Berita::count();
+        $totalKategori = Kategori::count();
+        $totalUser = User::count();
+
+        $latestBerita = Berita::with('kategori')->latest()->get()->take(5);
+        return view('backend.content.dashboard', compact('totalBerita','totalKategori','totalUser','latestBerita'));
     }
     public function profile(){
-        return view('backend.content.profile');
+        $id = Auth::guard('user')->user()->id;
+        $user = User::findOrFail($id);
+        return view('backend.content.profile', compact('user'));
     }
     public function resetPassword(){
         return view('backend.content.resetPassword');

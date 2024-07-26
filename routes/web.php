@@ -3,7 +3,10 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\MenuController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\File;
@@ -20,9 +23,17 @@ use Illuminate\Support\Facades\Response;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/', [HomeController::class, 'index'])->name('home.index');
+Route::get('/berita/{id}', [HomeController::class, 'detailBerita'])->name('home.detailBerita');
+Route::get('/page/{id}', [HomeController::class, 'detailPage'])->name('home.detailPage');
+Route::get('/berita', [HomeController::class, 'semuaBerita'])->name('home.berita');
+
+
+
 
 Route::get('/login', [AuthController::class, 'index'])->name('auth.index')->middleware('guest');
 Route::post('/login', [AuthController::class, 'verify'])->name('auth.verify');
@@ -59,9 +70,27 @@ Route::group(['middleware' => 'auth:user'], function(){
         Route::get('/user/ubah/{id}', [UserController::class, 'ubah'])->name('user.ubah');
         Route::post('/user/prosesUbah', [UserController::class, 'prosesUbah'])->name('user.prosesUbah');
         Route::get('/user/hapus/{id}', [UserController::class, 'hapus'])->name('user.hapus');
-    });
 
+        // Page
+        Route::get('/page', [PageController::class, 'index'])->name('page.index');
+        Route::get('/page/tambah', [PageController::class, 'tambah'])->name('page.tambah');
+        Route::post('/page/prosesTambah', [PageController::class, 'prosesTambah'])->name('page.prosesTambah');
+        Route::get('/page/ubah/{id}', [PageController::class, 'ubah'])->name('page.ubah');
+        Route::post('/page/prosesUbah', [PageController::class, 'prosesUbah'])->name('page.prosesUbah');
+        Route::get('/page/hapus/{id}', [PageController::class, 'hapus'])->name('page.hapus');
+        
+        Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
+        Route::get('/menu/tambah', [MenuController::class, 'tambah'])->name('menu.tambah');
+        Route::post('/menu/prosesTambah', [MenuController::class, 'prosesTambah'])->name('menu.prosesTambah');
+        Route::get('/menu/ubah/{id}', [MenuController::class, 'ubah'])->name('menu.ubah');
+        Route::post('/menu/prosesUbah', [MenuController::class, 'prosesUbah'])->name('menu.prosesUbah');
+        Route::get('/menu/hapus/{id}', [MenuController::class, 'hapus'])->name('menu.hapus');
+        Route::get('/menu/order/{idMenu}/{idSwap}', [MenuController::class, 'order'])->name('menu.order');
+        
+    });
     Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+
+    
 });
 
 Route::get('files/{filename}', function ($filename){
